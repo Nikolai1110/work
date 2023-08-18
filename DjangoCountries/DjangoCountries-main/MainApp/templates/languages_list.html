@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	<h2>Languages list</h2>
+
+	<ol>
+		{% for language in languages_list %}
+			<li><a href="{% url 'get_language' language.name %}">{{ language.name }}</a></li>
+		{% endfor %}
+	</ol>
+	
+{% endblock %}

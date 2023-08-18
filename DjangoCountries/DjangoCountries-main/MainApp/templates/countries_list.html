@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h2>Countries list</h2>
+	
+	<span>Countries starting on:</span>
+	{% for let in alfabet %}
+		{% if let != letter %}
+			<a href="{{request.path}}?letter={{ let }}">{{ let }}</a>		
+		{% else %}
+			<span>{{ let }}</span>
+		{% endif %}
+	{% endfor %}
+	
+	<div style="padding-left: 30px;">
+		{% for country in page_obj %}
+			<p><a href="{% url 'get_country' country.country %}">{{ country.country }}</a></p>
+		{% endfor %}
+	</div>
+	
+	<span>Page:</span>
+	{% for page_number in page_obj.adjusted_elided_pages %}
+
+		{% if page_number == page_obj.paginator.ELLIPSIS %}
+			{{page_number}}
+
+		{% elif page_number != page and not letter %}
+			<a href="{{request.path}}?page={{ page_number }}" >{{page_number}}</a>
+
+		{% elif page_number != page and letter %}
+			<a href="{{request.path}}?page={{ page_number }}&letter={{ letter }}" >{{page_number}}</a>
+
+		{% else %}
+			{{page_number}}
+
+		{% endif %}
+		
+	{% endfor %}
+{% endblock %}
